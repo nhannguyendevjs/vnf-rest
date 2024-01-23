@@ -8,7 +8,10 @@ const getUsers = async (req) => {
 
     return result
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -23,10 +26,13 @@ const createUser = async (req) => {
 
       return result
     } else {
-      return error
+      throw error
     }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -37,7 +43,10 @@ const readUser = async (req) => {
 
     return result
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -54,10 +63,13 @@ const updateUser = async (req) => {
 
       return result
     } else {
-      return error
+      throw error
     }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -68,7 +80,10 @@ const deleteUser = async (req) => {
 
     return result
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 

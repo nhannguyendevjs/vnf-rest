@@ -14,16 +14,19 @@ const jwtChecker = async (req, res, next) => {
       const expireIn = DateTime.fromMillis(payload.exp * 1000)
       const user = await prisma.user.findUnique({ where: { phone: phone } })
       const today = DateTime.now()
+
       // Check if token is expired
       if (today > expireIn) {
         Logger.log('error', `[${req.ip}] ${req.method} ${req.originalUrl} 401`)
         res.status(401).json(new Error('Expired Token'))
       }
+
       // Check if user exists
       if (user.phone.toString() !== phone) {
         Logger.log('error', `[${req.ip}] ${req.method} ${req.originalUrl} 401`)
         res.status(401).json(new Error('Invalid Token'))
       }
+
       // Token is valid
       next()
     } else {

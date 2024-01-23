@@ -6,9 +6,15 @@ const generateAccessToken = (payload) => {
   try {
     const result = jwt.sign(payload, JWTConfigs.JWT_ACCESS_TOKEN_SECRET, { algorithm: JWTConfigs.JWT_ALGORITHM, expiresIn: JWTConfigs.JWT_ACCESS_TOKEN_EXPIRATION_TIME })
 
-    return result
+    return {
+      success: true,
+      data: result,
+    }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -22,9 +28,15 @@ const verifyAccessToken = async (token) => {
       payload,
     }
 
-    return result
+    return {
+      success: true,
+      data: result,
+    }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -32,9 +44,15 @@ const decryptAccessToken = async (token) => {
   try {
     const result = jwt.verify(token, JWTConfigs.JWT_ACCESS_TOKEN_SECRET, { algorithm: JWTConfigs.JWT_ALGORITHM })
 
-    return result
+    return {
+      success: true,
+      data: result,
+    }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -42,9 +60,15 @@ const generateRefreshToken = (payload) => {
   try {
     const result = jwt.sign(payload, JWTConfigs.JWT_REFRESH_TOKEN_SECRET, { algorithm: JWTConfigs.JWT_ALGORITHM, expiresIn: JWTConfigs.JWT_REFRESH_TOKEN_EXPIRATION_TIME })
 
-    return result
+    return {
+      success: true,
+      data: result,
+    }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -58,9 +82,15 @@ const verifyRefreshToken = async (token) => {
       payload,
     }
 
-    return result
+    return {
+      success: true,
+      data: result,
+    }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -68,11 +98,16 @@ const decryptRefreshToken = async (token) => {
   try {
     const result = jwt.verify(token, JWTConfigs.JWT_REFRESH_TOKEN_SECRET, { algorithm: JWTConfigs.JWT_ALGORITHM })
 
-    return result
+    return {
+      success: true,
+      data: result,
+    }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
 export { decryptAccessToken, decryptRefreshToken, generateAccessToken, generateRefreshToken, verifyAccessToken, verifyRefreshToken }
-

@@ -14,7 +14,10 @@ const uploadImage = async (fileName, file, useUniqueFileName = false) => {
     })
     return result
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 

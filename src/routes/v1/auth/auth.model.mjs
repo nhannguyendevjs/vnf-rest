@@ -3,26 +3,17 @@ import { prisma } from '../../../services/prisma/prisma.mjs'
 import * as Crypto from '../../../utils/crypto/crypto.mjs'
 import * as JWT from '../../../utils/jwt/jwt.mjs'
 
-const generateAccessToken = async (req) => {
-  try {
-    const result = {
-      token: JWT.generateAccessToken(req.body),
-    }
-
-    return result
-  } catch (error) {
-    return error
-  }
-}
-
 const verifyAccessToken = async (req) => {
   try {
-    const token = req.headers.authorization
-    const result = await JWT.verifyAccessToken(token)
+    const accessToken = req.headers.authorization
+    const result = await JWT.verifyAccessToken(accessToken).data
 
     return result
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
@@ -34,7 +25,7 @@ const signUpAccount = async (req) => {
     if (success) {
       const data = {
         username: account.username,
-        password: Crypto.encrypt(account.password),
+        password: Crypto.encrypt(account.password).data,
         user: {
           create: {
             name: account.name,
@@ -44,19 +35,25 @@ const signUpAccount = async (req) => {
           },
         },
       }
+
       const result = await prisma.account.create({ data })
 
       return result
     } else {
-      return error
+      throw error
     }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
 const signInAccount = async (req) => {
   try {
+    let hasError = false
+
     const signInAccount = req.body.account
     const { success, error } = AuthSchema.AccountSignInSchema.safeParse(signInAccount)
 
@@ -71,7 +68,7 @@ const signInAccount = async (req) => {
       })
 
       if (account) {
-        const password = Crypto.decrypt(account.password)
+        const password = Crypto.decrypt(account.password).data
 
         if (password === signInAccount.password) {
           const data = {
@@ -79,24 +76,50 @@ const signInAccount = async (req) => {
             username: account.username,
             password: account.password,
           }
-          const result = {
-            accessToken: JWT.generateAccessToken(data),
-            refreshToken: JWT.generateRefreshToken(data),
-          }
+          const accessToken = JWT.generateAccessToken(data).data
+          const refreshToken = JWT.generateRefreshToken(data).data
+          const result = { accessToken, refreshToken }
 
           return result
         } else {
-          return new Error('Invalid username or password')
+          hasError = true
         }
       } else {
-        return new Error('Invalid username or password')
+        hasError = true
+      }
+
+      if (hasError) {
+        throw new Error('Invalid username or password')
       }
     } else {
-      return error
+      throw error
     }
   } catch (error) {
-    return error
+    return {
+      success: false,
+      error,
+    }
   }
 }
 
-export { generateAccessToken, signInAccount, signUpAccount, verifyAccessToken }
+const refreshAccessToken = async (req) => {
+  try {
+    const refreshToken = req.cookies.jwt
+
+    if (refreshToken) {
+      const { payload } = await JWT.verifyRefreshToken(refreshToken).data
+      const accessToken = JWT.generateAccessToken(payload).data
+      const refreshToken = JWT.generateRefreshToken(payload).data
+      const result = { accessToken, refreshToken }
+
+      return result
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    }
+  }
+}
+
+export { refreshAccessToken, signInAccount, signUpAccount, verifyAccessToken }

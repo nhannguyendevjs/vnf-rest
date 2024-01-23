@@ -1,9 +1,12 @@
 import { workerData, parentPort } from 'node:worker_threads'
 
-const transform = () => {
-  return 'App Worker is ready to use'
+const transform = (_) => {
+  return {
+    success: true,
+    data: 'App Worker is ready to use',
+  }
 }
 
 parentPort.postMessage({
-  value: transform(workerData),
+  value: transform(workerData).data,
 })

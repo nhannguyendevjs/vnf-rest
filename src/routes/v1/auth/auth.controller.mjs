@@ -1,6 +1,6 @@
 import express from 'express'
 import { resJSON } from '../../../utils/request/request.mjs'
-import { generateAccessToken, verifyAccessToken, signInAccount, signUpAccount } from './auth.model.mjs'
+import { refreshAccessToken, signInAccount, signUpAccount, verifyAccessToken } from './auth.model.mjs'
 
 const router = express.Router()
 
@@ -22,20 +22,11 @@ const router = express.Router()
  *        description: Internal Server Error.
  */
 router
-  .post('/token', async (req, res) => {
-    const result = await generateAccessToken(req)
-
-    if (result instanceof Error) {
-      resJSON(req, res, 400, result)
-    } else {
-      resJSON(req, res, 200, result)
-    }
-  })
-  .get('/verify', async (req, res) => {
+  .get('/me', async (req, res) => {
     const result = await verifyAccessToken(req)
 
-    if (result instanceof Error) {
-      resJSON(req, res, 400, result)
+    if (result.error instanceof Error) {
+      resJSON(req, res, 401, result)
     } else {
       resJSON(req, res, 200, result)
     }
@@ -43,7 +34,7 @@ router
   .post('/sign-up', async (req, res) => {
     const result = await signUpAccount(req)
 
-    if (result instanceof Error) {
+    if (result.error instanceof Error) {
       resJSON(req, res, 400, result)
     } else {
       resJSON(req, res, 200, result)
@@ -52,8 +43,31 @@ router
   .post('/sign-in', async (req, res) => {
     const result = await signInAccount(req)
 
-    if (result instanceof Error) {
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    })
+
+    if (result.error instanceof Error) {
       resJSON(req, res, 401, result)
+    } else {
+      resJSON(req, res, 200, result)
+    }
+  })
+  .post('refresh', async (req, res) => {
+    const result = await refreshAccessToken(req)
+
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    })
+
+    if (result.error instanceof Error) {
+      resJSON(req, res, 406, result)
     } else {
       resJSON(req, res, 200, result)
     }

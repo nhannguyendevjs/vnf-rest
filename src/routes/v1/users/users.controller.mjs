@@ -26,7 +26,7 @@ router
   .get('/search', async (req, res) => {
     const result = await getUsers(req)
 
-    if (result instanceof Error) {
+    if (result.error instanceof Error) {
       resJSON(req, res, 400, result)
     } else {
       resJSON(req, res, 200, result)
@@ -35,7 +35,7 @@ router
   .post('/create', async (req, res) => {
     const result = await createUser(req)
 
-    if (result instanceof Error || result instanceof ZodError) {
+    if (result.error instanceof Error || result.error instanceof ZodError) {
       resJSON(req, res, 400, result)
     } else {
       resJSON(req, res, 200, result)
@@ -44,7 +44,7 @@ router
   .post('/read', async (req, res) => {
     const result = await readUser(req)
 
-    if (result instanceof Error) {
+    if (result.error instanceof Error) {
       resJSON(req, res, 400, result)
     } else {
       resJSON(req, res, 200, result)
@@ -53,7 +53,7 @@ router
   .patch('/update', async (req, res) => {
     const result = await updateUser(req)
 
-    if (result instanceof Error || result instanceof ZodError) {
+    if (result.error instanceof Error || result.error instanceof ZodError) {
       resJSON(req, res, 400, result)
     } else {
       resJSON(req, res, 200, result)
@@ -62,7 +62,7 @@ router
   .delete('/delete', async (req, res) => {
     const result = await deleteUser(req)
 
-    if (result instanceof Error) {
+    if (result.error instanceof Error) {
       resJSON(req, res, 400, result)
     } else {
       resJSON(req, res, 200, result)
