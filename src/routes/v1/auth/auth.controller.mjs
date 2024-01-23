@@ -1,4 +1,5 @@
 import express from 'express'
+import { ZodError } from 'zod'
 import { resJSON } from '../../../utils/request/request.mjs'
 import { refreshAccessToken, signInAccount, signUpAccount, verifyAccessToken } from './auth.model.mjs'
 
@@ -56,17 +57,17 @@ router
       resJSON(req, res, 200, { accessToken: result.accessToken })
     }
   })
-  .post('refresh', async (req, res) => {
+  .post('/refresh', async (req, res) => {
     const result = await refreshAccessToken(req)
 
-    res.cookie('jwt', refreshToken, {
+    res.cookie('jwt', result.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
       maxAge: 365 * 24 * 60 * 60 * 1000,
     })
 
-    if (result.error instanceof Error) {
+    if (result.error instanceof Error || result.error instanceof ZodError) {
       resJSON(req, res, 406, result.error)
     } else {
       resJSON(req, res, 200, { accessToken: result.accessToken })

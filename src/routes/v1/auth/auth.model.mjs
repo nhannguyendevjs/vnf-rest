@@ -1,4 +1,5 @@
 import * as AuthSchema from '../../../schemas/auth.schema.mjs'
+import * as JwtSchema from '../../../schemas/jwt.schema.mjs'
 import { prisma } from '../../../services/prisma/prisma.mjs'
 import * as Crypto from '../../../utils/crypto/crypto.mjs'
 import * as JWT from '../../../utils/jwt/jwt.mjs'
@@ -136,7 +137,10 @@ const refreshAccessToken = async (req) => {
       if (success) {
         let accessToken = ''
         let refreshToken = ''
-        let payload = data
+        let { payload } = data
+
+        // Parse payload
+        payload = JwtSchema.JwtSignPayloadSchema.parse(payload)
 
         // Generate new access token
         {
