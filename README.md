@@ -11,4 +11,5 @@
 ### License
 
 Copyright © 2024, [Nhan Nguyen](https://github.com/nhannguyendevjs).
+
 Released under the [MIT License](LICENSE).
