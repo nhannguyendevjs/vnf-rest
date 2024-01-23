@@ -26,7 +26,7 @@ router
     const result = await verifyAccessToken(req)
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 401, result)
+      resJSON(req, res, 401, result.error)
     } else {
       resJSON(req, res, 200, result)
     }
@@ -35,7 +35,7 @@ router
     const result = await signUpAccount(req)
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result)
+      resJSON(req, res, 400, result.error)
     } else {
       resJSON(req, res, 200, result)
     }
@@ -43,7 +43,7 @@ router
   .post('/sign-in', async (req, res) => {
     const result = await signInAccount(req)
 
-    res.cookie('jwt', refreshToken, {
+    res.cookie('jwt', result.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
@@ -51,9 +51,9 @@ router
     })
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 401, result)
+      resJSON(req, res, 401, result.error)
     } else {
-      resJSON(req, res, 200, result)
+      resJSON(req, res, 200, { accessToken: result.accessToken })
     }
   })
   .post('refresh', async (req, res) => {
@@ -67,9 +67,9 @@ router
     })
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 406, result)
+      resJSON(req, res, 406, result.error)
     } else {
-      resJSON(req, res, 200, result)
+      resJSON(req, res, 200, { accessToken: result.accessToken })
     }
   })
 

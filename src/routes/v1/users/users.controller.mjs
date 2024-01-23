@@ -27,7 +27,7 @@ router
     const result = await getUsers(req)
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result)
+      resJSON(req, res, 400, result.error)
     } else {
       resJSON(req, res, 200, result)
     }
@@ -36,7 +36,7 @@ router
     const result = await createUser(req)
 
     if (result.error instanceof Error || result.error instanceof ZodError) {
-      resJSON(req, res, 400, result)
+      resJSON(req, res, 400, result.error)
     } else {
       resJSON(req, res, 200, result)
     }
@@ -45,7 +45,7 @@ router
     const result = await readUser(req)
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result)
+      resJSON(req, res, 400, result.error)
     } else {
       resJSON(req, res, 200, result)
     }
@@ -54,7 +54,7 @@ router
     const result = await updateUser(req)
 
     if (result.error instanceof Error || result.error instanceof ZodError) {
-      resJSON(req, res, 400, result)
+      resJSON(req, res, 400, result.error)
     } else {
       resJSON(req, res, 200, result)
     }
@@ -63,7 +63,7 @@ router
     const result = await deleteUser(req)
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result)
+      resJSON(req, res, 400, result.error)
     } else {
       resJSON(req, res, 200, result)
     }

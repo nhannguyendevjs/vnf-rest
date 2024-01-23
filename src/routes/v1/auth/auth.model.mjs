@@ -6,9 +6,13 @@ import * as JWT from '../../../utils/jwt/jwt.mjs'
 const verifyAccessToken = async (req) => {
   try {
     const accessToken = req.headers.authorization
-    const result = await JWT.verifyAccessToken(accessToken).data
+    const { success, data, error } = await JWT.verifyAccessToken(accessToken)
 
-    return result
+    if (success) {
+      return data
+    } else {
+      throw error
+    }
   } catch (error) {
     return {
       success: false,
@@ -71,16 +75,36 @@ const signInAccount = async (req) => {
         const password = Crypto.decrypt(account.password).data
 
         if (password === signInAccount.password) {
-          const data = {
+          const payload = {
             id: account.user.id,
             username: account.username,
             password: account.password,
           }
-          const accessToken = JWT.generateAccessToken(data).data
-          const refreshToken = JWT.generateRefreshToken(data).data
-          const result = { accessToken, refreshToken }
 
-          return result
+          let accessToken = ''
+          let refreshToken = ''
+
+          // Generate new access token
+          {
+            const { success, data, error } = JWT.generateAccessToken(payload)
+            if (success) {
+              accessToken = data
+            } else {
+              throw error
+            }
+          }
+
+          // Generate new refresh token
+          {
+            const { success, data, error } = JWT.generateRefreshToken(payload)
+            if (success) {
+              refreshToken = data
+            } else {
+              throw error
+            }
+          }
+
+          return { accessToken, refreshToken }
         } else {
           hasError = true
         }
@@ -107,12 +131,37 @@ const refreshAccessToken = async (req) => {
     const refreshToken = req.cookies.jwt
 
     if (refreshToken) {
-      const { payload } = await JWT.verifyRefreshToken(refreshToken).data
-      const accessToken = JWT.generateAccessToken(payload).data
-      const refreshToken = JWT.generateRefreshToken(payload).data
-      const result = { accessToken, refreshToken }
+      const { success, data, error } = await JWT.verifyRefreshToken(refreshToken)
 
-      return result
+      if (success) {
+        let accessToken = ''
+        let refreshToken = ''
+        let payload = data
+
+        // Generate new access token
+        {
+          const { success, data, error } = JWT.generateAccessToken(payload)
+          if (success) {
+            accessToken = data
+          } else {
+            throw error
+          }
+        }
+
+        // Generate new refresh token
+        {
+          const { success, data, error } = JWT.generateRefreshToken(payload)
+          if (success) {
+            refreshToken = data
+          } else {
+            throw error
+          }
+        }
+
+        return { accessToken, refreshToken }
+      } else {
+        throw error
+      }
     }
   } catch (error) {
     return {
