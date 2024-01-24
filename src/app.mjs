@@ -59,7 +59,7 @@ app.use(helmet())
 
 let appWorker
 
-appWorker = new Worker(__dirname + '/utils/worker-threads/app.worker.mjs', { workerData: 'ping' })
+appWorker = new Worker(__dirname + '/worker-threads/app.worker.mjs', { workerData: 'ping' })
 appWorker.on('message', (res) => {
   LoggerService.Logger.log('info', res.value)
 })

@@ -2,7 +2,7 @@ import * as AuthSchema from '../../../schemas/auth.schema.mjs'
 import * as JwtSchema from '../../../schemas/jwt.schema.mjs'
 import { prisma } from '../../../services/prisma/prisma.mjs'
 import * as Crypto from '../../../utils/crypto/crypto.mjs'
-import * as JWT from '../../../utils/jwt/jwt.mjs'
+import * as JWT from '../../../jwt/jwt.mjs'
 
 const verifyAccessToken = async (req) => {
   try {
