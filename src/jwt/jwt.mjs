@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { DateTime } from 'luxon'
-import { JWTConfigs } from '../../app.config.mjs'
+import { JWTConfigs } from '../app.config.mjs'
 
 const generateAccessToken = (payload) => {
   try {
