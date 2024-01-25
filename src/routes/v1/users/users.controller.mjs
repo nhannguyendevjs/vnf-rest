@@ -1,6 +1,6 @@
 import express from 'express'
 import { resJSON } from '../../../utils/request/request.mjs'
-import { createUser, deleteUser, getUsers, readUser, updateUser } from './users.model.mjs'
+import { deleteUser, getUsers, readUser, updateUser } from './users.model.mjs'
 import { ZodError } from 'zod'
 
 const router = express.Router()
@@ -27,15 +27,6 @@ router
     const result = await getUsers(req)
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result.error)
-    } else {
-      resJSON(req, res, 200, result)
-    }
-  })
-  .post('/create', async (req, res) => {
-    const result = await createUser(req)
-
-    if (result.error instanceof Error || result.error instanceof ZodError) {
       resJSON(req, res, 400, result.error)
     } else {
       resJSON(req, res, 200, result)

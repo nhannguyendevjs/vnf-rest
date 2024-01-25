@@ -105,7 +105,7 @@ const signInAccount = async (req) => {
             }
           }
 
-          return { accessToken, refreshToken }
+          return { accessToken, refreshToken, user: account.user }
         } else {
           hasError = true
         }

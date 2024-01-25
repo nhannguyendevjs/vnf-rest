@@ -1,5 +1,5 @@
 import { prisma } from '../../../services/prisma/prisma.mjs'
-import { UserSubmittedSchema } from '../../../schemas/users.schema.mjs'
+import { UserUpdatedSchema } from '../../../schemas/users.schema.mjs'
 
 const getUsers = async (req) => {
   try {
@@ -7,27 +7,6 @@ const getUsers = async (req) => {
     const result = await prisma.user.findMany(queries)
 
     return result
-  } catch (error) {
-    return {
-      success: false,
-      error,
-    }
-  }
-}
-
-const createUser = async (req) => {
-  try {
-    const user = req.body.user
-    const { success, error } = UserSubmittedSchema.safeParse(user)
-
-    if (success) {
-      const data = user
-      const result = await prisma.user.create({ data })
-
-      return result
-    } else {
-      throw error
-    }
   } catch (error) {
     return {
       success: false,
@@ -55,7 +34,7 @@ const updateUser = async (req) => {
     const user = req.body.user
     const where = req.body.where
 
-    const { success, error } = UserSubmittedSchema.safeParse(user)
+    const { success, error } = UserUpdatedSchema.safeParse(user)
 
     if (success && where) {
       const data = user
@@ -87,4 +66,4 @@ const deleteUser = async (req) => {
   }
 }
 
-export { createUser, deleteUser, getUsers, readUser, updateUser }
+export { deleteUser, getUsers, readUser, updateUser }

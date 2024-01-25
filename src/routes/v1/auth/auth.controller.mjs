@@ -54,7 +54,7 @@ router
     if (result.error instanceof Error) {
       resJSON(req, res, 401, result.error)
     } else {
-      resJSON(req, res, 200, { accessToken: result.accessToken })
+      resJSON(req, res, 200, { accessToken: result.accessToken, user: result.user })
     }
   })
   .post('/refresh', async (req, res) => {

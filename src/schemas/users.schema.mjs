@@ -8,12 +8,12 @@ const UserSchema = zod.object({
   address: zod.string(),
 })
 
-const UserSubmittedSchema = zod.object({
+const UserUpdatedSchema = zod.object({
   name: zod.string(),
   email: zod.string().email(),
   phone: zod.string(),
   address: zod.string(),
 })
 
-export { UserSchema, UserSubmittedSchema }
+export { UserSchema, UserUpdatedSchema }
 

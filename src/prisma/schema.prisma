@@ -18,7 +18,7 @@ model User {
   address   String
   account   Account  @relation(fields: [accountId], references: [id])
   accountId String   @unique @db.ObjectId
-  role      UserRole @default(USER)
+  role      UserRole @default(user)
   avatar    String?
 
   @@map("users")
@@ -34,8 +34,8 @@ model Account {
 }
 
 enum UserRole {
-  ADMIN
-  USER
+  admin
+  user
 }
 
 type PasswordEncrypted {
