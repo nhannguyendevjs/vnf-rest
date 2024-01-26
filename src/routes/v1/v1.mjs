@@ -11,7 +11,7 @@ const swaggerJsdocOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'NTGVN RESTfull APIs',
+      title: 'VNF RESTfull APIs',
       version: '1.0.0',
     },
   },

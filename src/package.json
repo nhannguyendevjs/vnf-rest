@@ -1,8 +1,8 @@
 {
-  "name": "ntgvn-rest",
+  "name": "vnf-rest",
   "version": "1.0.0",
   "type": "module",
-  "description": "NTGVN RESTfull API",
+  "description": "VNF RESTfull API",
   "main": "index.mjs",
   "engines": {
     "node": "20.x"
@@ -15,17 +15,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hoainhaannguyen94/ntgvn-rest.git"
+    "url": "git+https://github.com/hoainhaannguyen94/vnf-rest.git"
   },
   "keywords": [
-    "ntgvn-rest"
+    "vnf-rest"
   ],
   "author": "hoainhaanguyen@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hoainhaannguyen94/ntgvn-rest/issues"
+    "url": "https://github.com/hoainhaannguyen94/vnf-rest/issues"
   },
-  "homepage": "https://github.com/hoainhaannguyen94/ntgvn-rest#readme",
+  "homepage": "https://github.com/hoainhaannguyen94/vnf-rest#readme",
   "dependencies": {
     "@bull-board/express": "^5.11.0",
     "@prisma/client": "^5.8.1",

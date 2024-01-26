@@ -20,7 +20,7 @@
         cluster: 'ap1',
       })
 
-      const channel = pusher.subscribe('ntgvn')
+      const channel = pusher.subscribe('vnf')
 
       channel.bind('notification', function (data) {
         console.log(JSON.stringify(data))

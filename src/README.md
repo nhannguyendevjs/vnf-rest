@@ -23,13 +23,13 @@ You can download and install Docker on https://docs.docker.com/desktop/install/w
 ### Network
 
 ```bash
-docker network create ntgvn-network
+docker network create vnf-network
 ```
 
 ### Ubuntu
 
 ```bash
-docker run --name ntgvn-ubuntu --network ntgvn-network -p 80:8080 -p 443:8443 -p 22:22 -itd ubuntu:latest
+docker run --name vnf-ubuntu --network vnf-network -p 80:8080 -p 443:8443 -p 22:22 -itd ubuntu:latest
 ```
 
 ### MongoDB
@@ -37,11 +37,11 @@ docker run --name ntgvn-ubuntu --network ntgvn-network -p 80:8080 -p 443:8443 -p
 #### Primary
 
 ```bash
-docker run -d --network ntgvn-network -p 127.0.10.1:27017:27017 --name ntgvn-mongo mongo:latest mongod --replSet repl-set
+docker run -d --network vnf-network -p 127.0.10.1:27017:27017 --name vnf-mongo mongo:latest mongod --replSet repl-set
 
-docker exec -it ntgvn-mongo mongosh
+docker exec -it vnf-mongo mongosh
 
-config = { "_id" : "repl-set", "members" : [ { "_id" : 0, "host" : "ntgvn-mongo:27017" }, { "_id" : 1, "host" : "ntgvn-mongo-secondary:27017" } ] }
+config = { "_id" : "repl-set", "members" : [ { "_id" : 0, "host" : "vnf-mongo:27017" }, { "_id" : 1, "host" : "vnf-mongo-secondary:27017" } ] }
 
 rs.initiate(config)
 ```
@@ -49,42 +49,42 @@ rs.initiate(config)
 ##### Secondary
 
 ```bash
-docker run -d --network ntgvn-network -p 127.0.20.1:27017:27017 --name ntgvn-mongo-secondary mongo:latest mongod --replSet repl-set
+docker run -d --network vnf-network -p 127.0.20.1:27017:27017 --name vnf-mongo-secondary mongo:latest mongod --replSet repl-set
 
-docker exec -it ntgvn-mongo-secondary mongosh
+docker exec -it vnf-mongo-secondary mongosh
 ```
 
 ##### Add Host
 
 ```txt
-# Docker NTGVN MongoDB Replica Set
-127.0.10.1 ntgvn-mongo
-127.0.20.1 ntgvn-mongo-secondary
+# Docker VNF MongoDB Replica Set
+127.0.10.1 vnf-mongo
+127.0.20.1 vnf-mongo-secondary
 # End of section
 ```
 
 #### URI
 
 ```txt
-mongodb://ntgvn-mongo:27017,ntgvn-mongo-secondary:27018/test?replicaSet=repl-set
+mongodb://vnf-mongo:27017,vnf-mongo-secondary:27018/test?replicaSet=repl-set
 ```
 
 #### Redis
 
 ```bash
-docker run -d --network ntgvn-network -p 6379:6379 --name ntgvn-redis redis:latest
+docker run -d --network vnf-network -p 6379:6379 --name vnf-redis redis:latest
 ```
 
 ### Docker Build
 
 ```bash
-docker build . -t ntgvn-rest:latest
+docker build . -t vnf-rest:latest
 ```
 
 ### Docker Run
 
 ```bash
-docker run -d -p 80:80 -p 443:443 --network ntgvn-network -v d:/Debug/ntgvn-rest/app:/app/ --name ntgvn-rest ntgvn-rest:latest
+docker run -d -p 80:80 -p 443:443 --network vnf-network -v d:/Debug/vnf-rest/app:/app/ --name vnf-rest vnf-rest:latest
 ```
 
 ### Docker Compose

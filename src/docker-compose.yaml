@@ -1,24 +1,24 @@
 version: "3"
 services:
-  ntgvn-mongo:
+  vnf-mongo:
       image: mongo:latest
       ports:
           - "27017:27017"
       networks:
-          - ntgvn-network
+          - vnf-network
       restart: always
-  ntgvn-rest:
-      image: ntgvn-rest:latest
+  vnf-rest:
+      image: vnf-rest:latest
       volumes:
-          - d:/Debug/ntgvn-rest/app:/app/
+          - d:/Debug/vnf-rest/app:/app/
       ports:
           - "8080:8080"
           - "8443:8443"
       networks:
-          - ntgvn-network
+          - vnf-network
       depends_on:
-          - ntgvn-mongo
+          - vnf-mongo
       restart: always
 networks:
-  ntgvn-network:
+  vnf-network:
       external: true

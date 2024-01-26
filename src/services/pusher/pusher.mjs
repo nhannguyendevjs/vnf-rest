@@ -19,7 +19,7 @@ const bootstrap = async () => {
 }
 
 const broadcast = (message) => {
-  pusher.trigger('ntgvn', 'notification', message)
+  pusher.trigger('vnf', 'notification', message)
 }
 
 export { bootstrap, broadcast }
