@@ -31,13 +31,11 @@ const readUser = async (req) => {
 
 const updateUser = async (req) => {
   try {
-    const user = req.body.user
-    const where = req.body.where
+    const { where, data } = req.body
 
-    const { success, error } = UserUpdatedSchema.safeParse(user)
+    const { success, error } = UserUpdatedSchema.safeParse(data)
 
     if (success && where) {
-      const data = user
       const result = await prisma.user.update({ where, data })
 
       return result
