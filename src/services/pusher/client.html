@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pusher Client</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  </head>
+
+  <body>
+    <h1>Pusher Test</h1>
+    <p>Try publishing an event to channel <code>my-channel</code> with event name <code>my-event</code>.</p>
+
+    <script>
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true
+
+      const pusher = new Pusher('1e09e7b655382f17bf2c', {
+        cluster: 'ap1',
+      })
+
+      const channel = pusher.subscribe('vnf')
+
+      channel.bind('notification', function (data) {
+        console.log(JSON.stringify(data))
+      })
+    </script>
+  </body>
+</html>
