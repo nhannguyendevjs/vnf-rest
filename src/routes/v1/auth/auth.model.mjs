@@ -1,8 +1,8 @@
+import * as JWT from '../../../jwt/jwt.mjs'
 import * as AuthSchema from '../../../schemas/auth.schema.mjs'
 import * as JwtSchema from '../../../schemas/jwt.schema.mjs'
 import { prisma } from '../../../services/prisma/prisma.mjs'
 import * as Crypto from '../../../utils/crypto/crypto.mjs'
-import * as JWT from '../../../jwt/jwt.mjs'
 
 const verifyAccessToken = async (req) => {
   try {
@@ -10,7 +10,9 @@ const verifyAccessToken = async (req) => {
     const { success, data, error } = await JWT.verifyAccessToken(accessToken)
 
     if (success) {
-      return data
+      const user = await prisma.user.findUnique({ where: { id: data.payload.id } })
+
+      return user
     } else {
       throw error
     }
