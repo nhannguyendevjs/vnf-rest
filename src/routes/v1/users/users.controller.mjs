@@ -23,7 +23,7 @@ const router = express.Router()
  *        description: Internal Server Error.
  */
 router
-  .get('/search', async (req, res) => {
+  .post('/search', async (req, res) => {
     const result = await getUsers(req)
 
     if (result.error instanceof Error) {
