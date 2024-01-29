@@ -116,7 +116,7 @@ const signInAccount = async (req) => {
       }
 
       if (hasError) {
-        throw new Error('Invalid username or password')
+        throw new Error('Invalid username or password.')
       }
     } else {
       throw error
