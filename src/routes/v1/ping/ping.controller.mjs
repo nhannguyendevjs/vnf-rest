@@ -1,7 +1,7 @@
-import express from 'express'
-import { resJSON } from '../../../utils/request/request.mjs'
+import express from 'express';
+import { resJSON } from '../../../utils/request/request.mjs';
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @openapi
@@ -21,7 +21,7 @@ const router = express.Router()
  *        description: Internal Server Error.
  */
 router.get('/', async (req, res) => {
-  resJSON(req, res, 200, true)
-})
+  resJSON(req, res, 200, true);
+});
 
-export { router as PingRouter }
+export { router as PingRouter };

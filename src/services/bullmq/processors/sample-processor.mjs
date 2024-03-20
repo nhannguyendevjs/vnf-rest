@@ -1,7 +1,7 @@
-import { Logger } from '../../logger/logger.mjs'
+import { Logger } from '../../logger/logger.mjs';
 
 const sampleProcessor = (job) => {
-  Logger.log('info', 'Sample Processor: ' + JSON.stringify(job.data))
-}
+  Logger.log('info', 'Sample Processor: ' + JSON.stringify(job.data));
+};
 
-export { sampleProcessor }
+export { sampleProcessor };

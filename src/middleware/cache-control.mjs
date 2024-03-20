@@ -1,19 +1,19 @@
-const DEFAULT_PERIOD = 60 * 5 // 5 minutes
+const DEFAULT_PERIOD = 60 * 5; // 5 minutes
 
 const cacheControl = (req, res, next, period = DEFAULT_PERIOD) => {
   if (req.method === 'GET') {
-    res.set('Cache-Control', `public, max-age=${period}`)
+    res.set('Cache-Control', `public, max-age=${period}`);
   } else {
-    res.set('Cache-Control', `no-store`)
+    res.set('Cache-Control', `no-store`);
   }
 
-  next()
-}
+  next();
+};
 
 const cacheControlNoStore = (_req, res, next) => {
-  res.set('Cache-Control', `no-store`)
+  res.set('Cache-Control', `no-store`);
 
-  next()
-}
+  next();
+};
 
-export { cacheControl, cacheControlNoStore }
+export { cacheControl, cacheControlNoStore };

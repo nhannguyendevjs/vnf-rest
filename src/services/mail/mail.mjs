@@ -1,6 +1,6 @@
-import axios from 'axios'
-import { GeneralConfigs, MailConfigs } from '../../app.config.mjs'
-import { Logger } from '../../services/logger/logger.mjs'
+import axios from 'axios';
+import { GeneralConfigs, MailConfigs } from '../../app.config.mjs';
+import { Logger } from '../../services/logger/logger.mjs';
 
 // Mail Service
 const sendMail = async (to, subject, html) => {
@@ -17,14 +17,14 @@ const sendMail = async (to, subject, html) => {
           domain: GeneralConfigs.APP_DOMAIN,
         },
       }
-    )
+    );
   }
-}
+};
 
 const bootstrap = async () => {
   if (MailConfigs.ENABLE_GMAIL) {
-    Logger.log('info', `Mail API is ready to use`)
+    Logger.log('info', `Mail API is ready to use`);
   }
-}
+};
 
-export { bootstrap, sendMail }
+export { bootstrap, sendMail };

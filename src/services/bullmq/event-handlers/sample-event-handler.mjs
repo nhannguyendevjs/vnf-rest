@@ -1,5 +1,5 @@
 const sampleEventHandler = async (job) => {
-  return job
-}
+  return job;
+};
 
-export { sampleEventHandler }
+export { sampleEventHandler };

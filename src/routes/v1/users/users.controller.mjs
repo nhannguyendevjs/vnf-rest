@@ -1,9 +1,9 @@
-import express from 'express'
-import { resJSON } from '../../../utils/request/request.mjs'
-import { deleteUser, getUsers, readUser, updateUser } from './users.model.mjs'
-import { ZodError } from 'zod'
+import express from 'express';
+import { resJSON } from '../../../utils/request/request.mjs';
+import { deleteUser, getUsers, readUser, updateUser } from './users.model.mjs';
+import { ZodError } from 'zod';
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @openapi
@@ -24,40 +24,40 @@ const router = express.Router()
  */
 router
   .post('/search', async (req, res) => {
-    const result = await getUsers(req)
+    const result = await getUsers(req);
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result.error)
+      resJSON(req, res, 400, result.error);
     } else {
-      resJSON(req, res, 200, result)
+      resJSON(req, res, 200, result);
     }
   })
   .post('/read', async (req, res) => {
-    const result = await readUser(req)
+    const result = await readUser(req);
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result.error)
+      resJSON(req, res, 400, result.error);
     } else {
-      resJSON(req, res, 200, result)
+      resJSON(req, res, 200, result);
     }
   })
   .patch('/update', async (req, res) => {
-    const result = await updateUser(req)
+    const result = await updateUser(req);
 
     if (result.error instanceof Error || result.error instanceof ZodError) {
-      resJSON(req, res, 400, result.error)
+      resJSON(req, res, 400, result.error);
     } else {
-      resJSON(req, res, 200, result)
+      resJSON(req, res, 200, result);
     }
   })
   .delete('/delete', async (req, res) => {
-    const result = await deleteUser(req)
+    const result = await deleteUser(req);
 
     if (result.error instanceof Error) {
-      resJSON(req, res, 400, result.error)
+      resJSON(req, res, 400, result.error);
     } else {
-      resJSON(req, res, 200, result)
+      resJSON(req, res, 200, result);
     }
-  })
+  });
 
-export { router as UsersRouter }
+export { router as UsersRouter };

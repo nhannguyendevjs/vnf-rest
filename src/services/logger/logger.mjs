@@ -1,5 +1,5 @@
-import { createLogger, format, transports } from 'winston'
-import { LoggerConfigs } from '../../app.config.mjs'
+import { createLogger, format, transports } from 'winston';
+import { LoggerConfigs } from '../../app.config.mjs';
 
 const Logger = createLogger({
   format: format.combine(format.timestamp(), format.json()),
@@ -13,10 +13,10 @@ const Logger = createLogger({
       filename: 'logs/info.log',
     }),
   ],
-})
+});
 
 const bootstrap = async () => {
-  Logger.log('info', `Logger is ready to use`)
-}
+  Logger.log('info', `Logger is ready to use`);
+};
 
-export { Logger, bootstrap }
+export { Logger, bootstrap };

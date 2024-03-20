@@ -1,12 +1,12 @@
-import UAParser from 'ua-parser-js'
+import UAParser from 'ua-parser-js';
 
 const getUserAgent = (req) => {
-  const userAgent = new UAParser(req.get('User-Agent'))
+  const userAgent = new UAParser(req.get('User-Agent'));
 
   return {
     success: true,
     data: userAgent.getResult(),
-  }
-}
+  };
+};
 
-export { getUserAgent }
+export { getUserAgent };

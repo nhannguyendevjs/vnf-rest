@@ -1,4 +1,4 @@
-import { Logger } from '../../services/logger/logger.mjs'
+import { Logger } from '../../services/logger/logger.mjs';
 
 /**
  * @param {*} req
@@ -6,11 +6,11 @@ import { Logger } from '../../services/logger/logger.mjs'
  */
 const showLog = (req, code) => {
   if (code < 400) {
-    Logger.log('info', `[${req.ip}] ${req.method} ${req.originalUrl} ${code}`)
+    Logger.log('info', `[${req.ip}] ${req.method} ${req.originalUrl} ${code}`);
   } else {
-    Logger.log('error', `[${req.ip}] ${req.method} ${req.originalUrl} ${code}`)
+    Logger.log('error', `[${req.ip}] ${req.method} ${req.originalUrl} ${code}`);
   }
-}
+};
 
 /**
  * @description
@@ -22,30 +22,30 @@ const showLog = (req, code) => {
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
 const buildResSuccess = (code) => {
-  return code < 400
-}
+  return code < 400;
+};
 
 const buildResKey = (data) => {
-  return data instanceof Error ? 'error' : 'data'
-}
+  return data instanceof Error ? 'error' : 'data';
+};
 
 const buildResData = (code, data) => {
-  return data instanceof Error ? { code, message: data.message } : data
-}
+  return data instanceof Error ? { code, message: data.message } : data;
+};
 
 const resJSON = (req, res, code, data) => {
-  showLog(req, code)
+  showLog(req, code);
 
   res.status(code).json({
     success: buildResSuccess(code),
     [buildResKey(data)]: buildResData(code, data),
-  })
-}
+  });
+};
 
 const resSend = (req, res, code, data) => {
-  showLog(req, code)
+  showLog(req, code);
 
-  res.status(code).send(data)
-}
+  res.status(code).send(data);
+};
 
-export { resJSON, resSend }
+export { resJSON, resSend };
