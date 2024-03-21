@@ -1,0 +1,24 @@
+version: "3"
+services:
+  vnf-mongo:
+      image: mongo:latest
+      ports:
+          - "27017:27017"
+      networks:
+          - vnf-network
+      restart: always
+  vnf-rest:
+      image: vnf-rest:latest
+      volumes:
+          - d:/Debug/vnf-rest/app:/app/
+      ports:
+          - "8080:8080"
+          - "8443:8443"
+      networks:
+          - vnf-network
+      depends_on:
+          - vnf-mongo
+      restart: always
+networks:
+  vnf-network:
+      external: true
