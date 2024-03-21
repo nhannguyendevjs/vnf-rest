@@ -1,4 +1,4 @@
-import zod from 'zod'
+import zod from 'zod';
 
 const AccountSignUpdSchema = zod.object({
   name: zod.string(),
@@ -7,11 +7,11 @@ const AccountSignUpdSchema = zod.object({
   address: zod.string(),
   password: zod.string(),
   role: zod.enum(['admin', 'user']),
-})
+});
 
 const AccountSignInSchema = zod.object({
   username: zod.string(),
   password: zod.string(),
-})
+});
 
-export { AccountSignUpdSchema, AccountSignInSchema }
+export { AccountSignUpdSchema, AccountSignInSchema };

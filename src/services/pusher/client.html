@@ -14,17 +14,17 @@
 
     <script>
       // Enable pusher logging - don't include this in production
-      Pusher.logToConsole = true
+      Pusher.logToConsole = true;
 
       const pusher = new Pusher('1e09e7b655382f17bf2c', {
         cluster: 'ap1',
-      })
+      });
 
-      const channel = pusher.subscribe('vnf')
+      const channel = pusher.subscribe('vnf');
 
       channel.bind('notification', function (data) {
-        console.log(JSON.stringify(data))
-      })
+        console.log(JSON.stringify(data));
+      });
     </script>
   </body>
 </html>

@@ -1,67 +1,67 @@
-import { prisma } from '../../../services/prisma/prisma.mjs'
-import { UserUpdatedSchema } from '../../../schemas/users.schema.mjs'
+import { prisma } from '../../../services/prisma/prisma.mjs';
+import { UserUpdatedSchema } from '../../../schemas/users.schema.mjs';
 
 const getUsers = async (req) => {
   try {
-    const queries = req.body.queries
-    const result = await prisma.user.findMany(queries)
+    const queries = req.body.queries;
+    const result = await prisma.user.findMany(queries);
 
-    return result
+    return result;
   } catch (error) {
     return {
       success: false,
       error,
-    }
+    };
   }
-}
+};
 
 const readUser = async (req) => {
   try {
-    const where = req.body.where
-    const result = await prisma.user.findUnique({ where })
+    const where = req.body.where;
+    const result = await prisma.user.findUnique({ where });
 
-    return result
+    return result;
   } catch (error) {
     return {
       success: false,
       error,
-    }
+    };
   }
-}
+};
 
 const updateUser = async (req) => {
   try {
-    const { where, data } = req.body
+    const { where, data } = req.body;
 
-    const { success, error } = UserUpdatedSchema.safeParse(data)
+    const { success, error } = UserUpdatedSchema.safeParse(data);
 
     if (success && where) {
-      const result = await prisma.user.update({ where, data })
+      const result = await prisma.user.update({ where, data });
 
-      return result
+      return result;
     } else {
-      throw error
+      throw error;
     }
   } catch (error) {
     return {
       success: false,
       error,
-    }
+    };
   }
-}
+};
 
 const deleteUser = async (req) => {
   try {
-    const where = req.body.where
-    const result = await prisma.user.delete({ where })
+    const where = req.body.where;
+    const result = await prisma.user.delete({ where });
 
-    return result
+    return result;
   } catch (error) {
     return {
       success: false,
       error,
-    }
+    };
   }
-}
+};
 
-export { deleteUser, getUsers, readUser, updateUser }
+export { deleteUser, getUsers, readUser, updateUser };
